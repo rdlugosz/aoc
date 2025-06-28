@@ -21,13 +21,53 @@ end
 @right.sort!
 
 def count_in_right(l_val, idx)
-  # Given we have a sorted list, this could probably be
-  # optimized further than what Array#count does
   if @options[:binary_search]
-    raise "not implemented"
+    first = find_first_instance(l_val, @right)
+    return 0 unless first
+
+    last = find_last_instance(l_val, @right)
+    last - first + 1
   else
     @right.count(l_val)
   end
+end
+
+def find_first_instance(val, array)
+  left, right = 0, array.size - 1
+  result = nil
+
+  while left <= right
+    midpoint = (left + right) / 2
+    if array[midpoint] == val
+      result = midpoint
+      right  = midpoint - 1
+    elsif array[midpoint] < val
+      left = midpoint + 1
+    else
+      right = midpoint - 1
+    end
+  end
+
+  result
+end
+
+def find_last_instance(val, array)
+  left, right = 0, array.size - 1
+  result = nil
+
+  while left <= right
+    midpoint = (left + right) / 2
+    if array[midpoint] == val
+      result = midpoint
+      left = midpoint + 1
+    elsif array[midpoint] < val
+      left = midpoint + 1
+    else
+      right = midpoint - 1
+    end
+  end
+
+  result
 end
 
 distance   = 0
