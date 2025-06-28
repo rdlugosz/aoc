@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
 
-# Need to read the file form the cmd line
-
 @left  = []
 @right = []
 line_count = 0
@@ -17,18 +15,24 @@ end
 @right.sort!
 
 def count_in_right(l_val, idx)
+  # Given we have a sorted list, this could probably be
+  # optimized further than what Array#count does
   @right.count(l_val)
 end
 
-distance = 0
+distance   = 0
 similarity = 0
+
 @left.each_with_index do |l_val, idx|
   r_val = @right[idx]
-  puts "Index #{idx}, L: #{l_val}, R: #{r_val}"
+  # puts "Index #{idx}, L: #{l_val}, R: #{r_val}"
   distance += (l_val - r_val).abs
 
   similarity += l_val * count_in_right(l_val, idx)
 end
 
 puts "Total distance: #{distance}. Similarity: #{similarity}. Total lines in file: #{line_count}"
+
+# For reference, the correct solution should output:
+# Total distance: 1110981. Similarity: 24869388. Total lines in file: 1000
 
