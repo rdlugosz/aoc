@@ -1,4 +1,10 @@
 #!/usr/bin/env ruby
+require "optparse"
+
+@options = {}
+OptionParser.new do |opts|
+  opts.on("--binary_search") { @options[:binary_search] = true }
+end.parse!
 
 @left  = []
 @right = []
@@ -17,7 +23,11 @@ end
 def count_in_right(l_val, idx)
   # Given we have a sorted list, this could probably be
   # optimized further than what Array#count does
-  @right.count(l_val)
+  if @options[:binary_search]
+    raise "not implemented"
+  else
+    @right.count(l_val)
+  end
 end
 
 distance   = 0
